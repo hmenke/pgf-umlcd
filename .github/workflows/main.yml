@@ -191,12 +191,11 @@ jobs:
       uses: pgf-tikz/actions/ctan-upload@master
       with:
         action: validate
-        announcement: '<doc/generic/pgf/RELEASE_NOTES.md'
+        announcement: '<doc/latex/pgf-umlcd/RELEASE_NOTES.md'
         author: 'The PGF/TikZ Team;Xu Yuan'
         bugs: https://github.com/pgf-tikz/pgf-umlcd/issues
         ctanPath: /graphics/pgf/contrib/pgf-umlcd
-        description: |
-          <p>Some LaTeX macros for UML Class Diagrams.<a data-cke-saved-href="/pkg/pgf" href="/pkg/pgf">pgf</a><br></p>
+        description: '<doc/latex/pgf-umlcd/description.html'
         email: pgf-tikz@tug.org
         file: 'pgf-umlcd_${{ env.GIT_TAG }}.tar.gz'
         license: 'gpl2;lppl1.3c'
@@ -221,12 +220,11 @@ jobs:
       uses: pgf-tikz/actions/ctan-upload@master
       with:
         action: upload
-        announcement: '<doc/generic/pgf/RELEASE_NOTES.md'
+        announcement: '<doc/latex/pgf-umlcd/RELEASE_NOTES.md'
         author: 'The PGF/TikZ Team;Xu Yuan'
         bugs: https://github.com/pgf-tikz/pgf-umlcd/issues
         ctanPath: /graphics/pgf/contrib/pgf-umlcd
-        description: |
-          <p>Some LaTeX macros for UML Class Diagrams.<a data-cke-saved-href="/pkg/pgf" href="/pkg/pgf">pgf</a><br></p>
+        description: '<doc/latex/pgf-umlcd/description.html'
         email: pgf-tikz@tug.org
         file: 'pgf-umlcd_${{ env.GIT_TAG }}.tar.gz'
         license: 'gpl2;lppl1.3c'

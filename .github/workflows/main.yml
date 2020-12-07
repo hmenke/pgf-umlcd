@@ -88,11 +88,11 @@ jobs:
       run: |
         cd doc/latex/pgf-umlcd
         while : ; do
-          $engine -shell-escape -halt-on-error -interaction=nonstopmode pgf-umlcd-manual.tex
+          ${{ matrix.engine }} -shell-escape -halt-on-error -interaction=nonstopmode pgf-umlcd-manual.tex
           grep -q -E "(There were undefined references|Rerun to get (cross-references|the bars) right)" *.log || break
           [ "$(( thisrun=$(( thisrun + 1 )) ))" -lt 5 ] || { echo "Reruns exceeded"; exit 1; }
         done
-        if [ "$engine" = "latex" ]; then
+        if [ "${{ matrix.engine }}" = "latex" ]; then
             dvips pgf-umlcd-manual.dvi
             ps2pdf pgf-umlcd-manual.ps
         fi
@@ -107,7 +107,10 @@ jobs:
             -cvf pgf-umlcd_${GIT_TAG}.tar.gz $(cat FILES)
 
     - name: "ZIP: Sign"
-      if: matrix.engine == 'lualatex' && github.event_name != 'pull_request'
+      if: |
+        matrix.engine == 'lualatex' &&
+        github.event_name != 'pull_request' &&
+        env.GPG_SECRET_KEY != null
       env:
         GPG_SECRET_KEY: ${{ secrets.GPG_SECRET_KEY }}
         GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
@@ -211,7 +214,10 @@ jobs:
         version: ${{ env.GIT_TAG }}
 
     - name: "CTAN: Upload"
-      if: matrix.engine == 'luatex' && startsWith(github.ref, 'refs/tags/') && github.repository == 'pgf-tikz/pgf-umlcd'
+      if: |
+        matrix.engine == 'luatex' &&
+        startsWith(github.ref, 'refs/tags/') &&
+        github.repository == 'pgf-tikz/pgf-umlcd'
       uses: pgf-tikz/actions/ctan-upload@master
       with:
         action: upload

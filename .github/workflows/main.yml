@@ -150,7 +150,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: doc/latex/pgf-umlcd/pgf-umlcd-manual.pdf
-        asset_name: pgfmanual-${{ env.GIT_TAG }}.pdf
+        asset_name: pgf-umlcd-manual-${{ env.GIT_TAG }}.pdf
         asset_content_type: application/pdf
 
     - name: "Release: upload public key"

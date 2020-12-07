@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        engine: [lualatex, pdflatex, xelatex, latex]
+        engine: [pdflatex, xelatex, latex]
 
     steps:
     - uses: actions/checkout@v2
@@ -108,7 +108,7 @@ jobs:
 
     - name: "ZIP: Sign"
       if: |
-        matrix.engine == 'lualatex' &&
+        matrix.engine == 'pdflatex' &&
         github.event_name != 'pull_request' &&
         env.GPG_SECRET_KEY != null
       env:
@@ -134,7 +134,7 @@ jobs:
     - name: "Release: create"
       uses: actions/create-release@v1
       id: create_release
-      if: matrix.engine == 'luatex' && startsWith(github.ref, 'refs/tags/')
+      if: matrix.engine == 'pdflatex' && startsWith(github.ref, 'refs/tags/')
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -144,7 +144,7 @@ jobs:
 
     - name: "Release: upload manual"
       uses: actions/upload-release-asset@v1
-      if: matrix.engine == 'luatex' && startsWith(github.ref, 'refs/tags/')
+      if: matrix.engine == 'pdflatex' && startsWith(github.ref, 'refs/tags/')
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -155,7 +155,7 @@ jobs:
 
     - name: "Release: upload public key"
       uses: actions/upload-release-asset@v1
-      if: matrix.engine == 'luatex' && startsWith(github.ref, 'refs/tags/')
+      if: matrix.engine == 'pdflatex' && startsWith(github.ref, 'refs/tags/')
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -166,7 +166,7 @@ jobs:
 
     - name: "Release: upload ZIP"
       uses: actions/upload-release-asset@v1
-      if: matrix.engine == 'luatex' && startsWith(github.ref, 'refs/tags/')
+      if: matrix.engine == 'pdflatex' && startsWith(github.ref, 'refs/tags/')
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -177,7 +177,7 @@ jobs:
 
     - name: "Release: upload ZIP signature"
       uses: actions/upload-release-asset@v1
-      if: matrix.engine == 'luatex' && startsWith(github.ref, 'refs/tags/')
+      if: matrix.engine == 'pdflatex' && startsWith(github.ref, 'refs/tags/')
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -187,7 +187,7 @@ jobs:
         asset_content_type: text/plain
 
     - name: "CTAN: Validate"
-      if: matrix.engine == 'luatex'
+      if: matrix.engine == 'pdflatex'
       uses: pgf-tikz/actions/ctan-upload@master
       with:
         action: validate
@@ -215,7 +215,7 @@ jobs:
 
     - name: "CTAN: Upload"
       if: |
-        matrix.engine == 'luatex' &&
+        matrix.engine == 'pdflatex' &&
         startsWith(github.ref, 'refs/tags/') &&
         github.repository == 'pgf-tikz/pgf-umlcd'
       uses: pgf-tikz/actions/ctan-upload@master
